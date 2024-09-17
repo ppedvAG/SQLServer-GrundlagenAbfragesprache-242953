@@ -53,4 +53,18 @@ JOIN Categories ON Categories.CategoryID = Products.CategoryID
 WHERE Employees.LastName = 'Fuller' AND Categories.CategoryName = 'Seafood'
 
 SELECT * FROM #TempTable
+GO
 
+--Erstellen Sie einen Bericht, der die Gesamtzahl der 
+--Bestellungen nach Kunde seit dem 31. Dezember 1996 anzeigt. 
+--Der Bericht sollte nur Zeilen zurückgeben, 
+--für die die Gesamtzahl der Aufträge größer als 15 ist (5 Zeilen)
+CREATE VIEW vBericht AS
+SELECT CustomerID, COUNT(OrderID) as Bestellungen FROM Orders
+WHERE OrderDate >= '19961231'
+GROUP BY CustomerID
+HAVING COUNT(OrderID) > 15
+GO
+
+-- View Aufrufen
+SELECT * FROM vBericht
